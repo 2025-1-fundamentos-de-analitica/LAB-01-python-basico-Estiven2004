@@ -26,3 +26,14 @@ def pregunta_04():
      ('12', 3)]
 
     """
+    with open('files/input/data.csv') as file:
+        registros = {}
+        for line in file:
+            columns = line.strip().split('\t')
+            if len(columns) > 1:
+                date = columns[2].split('-')
+                if date[1] in registros:
+                    registros[date[1]] += 1
+                else:
+                    registros[date[1]] = 1
+    return sorted(registros.items())

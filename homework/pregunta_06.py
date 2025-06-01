@@ -26,3 +26,23 @@ def pregunta_06():
      ('jjj', 5, 17)]
 
     """
+    max_min_por_clave = {}
+    with open('files/input/data.csv', 'r') as file:
+        for line in file:
+            parts = line.strip().split('\t')
+            if len(parts) >= 5:  
+                diccionario_str = parts[4]
+                pares = diccionario_str.split(',')
+                for par in pares:
+                    if ':' in par:
+                        clave, valor_str = par.split(':')
+                        valor = int(valor_str)
+                        if clave in max_min_por_clave:
+                            max_min_por_clave[clave][0] = min(max_min_por_clave[clave][0], valor)
+                            max_min_por_clave[clave][1] = max(max_min_por_clave[clave][1], valor)
+                        else:
+                            max_min_por_clave[clave] = [valor, valor]
+
+    lista_ordenada = sorted([(clave, valores[0], valores[1]) for clave, valores in max_min_por_clave.items()])
+
+    return lista_ordenada
